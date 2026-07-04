@@ -1,6 +1,6 @@
 # Minefield Module Settings
 
-file_version: 1
+file_version: 2
 # Visual representation in menus
 menus:
   vote:
@@ -47,6 +47,9 @@ mines:
     # Particle and sound used on detonation
     particle: EXPLOSION_LARGE
     sound: ENTITY_GENERIC_EXPLODE
+  
+  # Setting this to true makes it so when players trigger a minefield, it teleports them to a random spawnpoint instead of using the propulsion
+  teleport: false
 
   # Milliseconds of immunity after triggering a mine to avoid rapid chain detonations
   immunity_millis: 1200
