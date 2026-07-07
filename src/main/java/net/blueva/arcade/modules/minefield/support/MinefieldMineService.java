@@ -188,11 +188,6 @@ public class MinefieldMineService {
             context.getMessagesAPI().sendRaw(player, message);
         }
 
-        String message = messageService.getMineTriggeredMessage();
-        if (message != null) {
-            context.getMessagesAPI().sendRaw(player, message);
-        }
-
         statsService.recordMineTriggered(player);
     }
 
