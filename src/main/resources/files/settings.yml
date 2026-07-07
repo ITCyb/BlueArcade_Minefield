@@ -1,10 +1,16 @@
-# Minefield Module Settings
+#  ____  _               _                      _
+# | __ )| |_   _  ___   / \   _ __ ___ __ _  __| | ___
+# |  _ \| | | | |/ _ \ / _ \ | '__/ __/ _` |/ _` |/ _ \
+# | |_) | | |_| |  __// ___ \| | | (_| (_| | (_| |  __/
+# |____/|_|\__,_|\___/_/   \_|_|  \___\__,_|\__,_|\___|
+#
+# [!] Arcade by Blueva | https://blueva.net/store/blue-arcade [!]
 
-file_version: 1
+# Minefield Module Settings
 # Visual representation in menus
 menus:
   vote:
-    item: LIGHT_WEIGHTED_PRESSURE_PLATE
+    item: "LIGHT_WEIGHTED_PRESSURE_PLATE"
 
 # Game items (optional)
 items:
@@ -36,8 +42,8 @@ mines:
 
   # Pressure plate materials that count as mines
   plate_materials:
-    - LIGHT_WEIGHTED_PRESSURE_PLATE
-    - STONE_PRESSURE_PLATE
+    - "LIGHT_WEIGHTED_PRESSURE_PLATE"
+    - "STONE_PRESSURE_PLATE"
 
   explosion:
     # Upward impulse applied when stepping on a mine
@@ -45,8 +51,8 @@ mines:
     # Backward impulse applied when stepping on a mine
     backward_force: 1.05
     # Particle and sound used on detonation
-    particle: EXPLOSION_LARGE
-    sound: ENTITY_GENERIC_EXPLODE
+    particle: "EXPLOSION_LARGE"
+    sound: "ENTITY_GENERIC_EXPLODE"
 
   # Milliseconds of immunity after triggering a mine to avoid rapid chain detonations
   immunity_millis: 1200

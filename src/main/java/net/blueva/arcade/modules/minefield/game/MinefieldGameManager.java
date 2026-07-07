@@ -76,11 +76,11 @@ public class MinefieldGameManager {
 
             context.getSoundsAPI().play(player, coreConfig.getSound("sounds.starting_game.countdown"));
 
-            String title = coreConfig.getLanguage("titles.starting_game.title")
+            String title = coreConfig.getLanguage(player, "titles.starting_game.title")
                     .replace("{game_display_name}", moduleInfo.getName())
                     .replace("{time}", String.valueOf(secondsLeft));
 
-            String subtitle = coreConfig.getLanguage("titles.starting_game.subtitle")
+            String subtitle = coreConfig.getLanguage(player, "titles.starting_game.subtitle")
                     .replace("{game_display_name}", moduleInfo.getName())
                     .replace("{time}", String.valueOf(secondsLeft));
 
@@ -94,10 +94,10 @@ public class MinefieldGameManager {
                 continue;
             }
 
-            String title = coreConfig.getLanguage("titles.game_started.title")
+            String title = coreConfig.getLanguage(player, "titles.game_started.title")
                     .replace("{game_display_name}", moduleInfo.getName());
 
-            String subtitle = coreConfig.getLanguage("titles.game_started.subtitle")
+            String subtitle = coreConfig.getLanguage(player, "titles.game_started.subtitle")
                     .replace("{game_display_name}", moduleInfo.getName());
 
             context.getTitlesAPI().sendRaw(player, title, subtitle, 0, 20, 20);
@@ -247,8 +247,8 @@ public class MinefieldGameManager {
         handlePlayerFinish(player);
         messageService.broadcastFinish(context, player, position);
 
-        String title = moduleConfig.getStringFrom("language.yml", "titles.finished.title");
-        String subtitle = moduleConfig.getStringFrom("language.yml", "titles.finished.subtitle")
+        String title = moduleConfig.getTranslation(player, "titles.finished.title");
+        String subtitle = moduleConfig.getTranslation(player, "titles.finished.subtitle")
                 .replace("{position}", String.valueOf(position));
 
         context.getTitlesAPI().sendRaw(player, title, subtitle, 0, 80, 20);
@@ -293,4 +293,10 @@ public class MinefieldGameManager {
 
         return placeholders;
     }
+
+    private static String formatCountdownTime(int seconds) {
+        int safeSeconds = Math.max(0, seconds);
+        return String.format("%02d:%02d", safeSeconds / 60, safeSeconds % 60);
+    }
+
 }

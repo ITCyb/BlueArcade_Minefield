@@ -27,6 +27,11 @@ import org.bukkit.event.Listener;
 import org.bukkit.inventory.ItemStack;
 
 import java.util.Map;
+import net.blueva.arcade.api.setup.ModuleSetupCommand;
+import net.blueva.arcade.api.setup.ModuleSetupMetadata;
+import net.blueva.arcade.api.setup.ModuleSetupStep;
+import net.blueva.arcade.api.setup.ModuleSetupStatusCheck;
+import java.util.List;
 
 public class MinefieldModule implements GameModule<Player, Location, World, Material, ItemStack, Sound, Block, Entity, Listener, EventPriority> {
 
@@ -53,8 +58,7 @@ public class MinefieldModule implements GameModule<Player, Location, World, Mate
         statsService = new MinefieldStatsService(statsAPI, moduleInfo, moduleConfig);
         statsService.registerStats();
 
-        moduleConfig.register("language.yml", 1);
-        moduleConfig.register("achievements.yml", 2);
+        moduleConfig.register("achievements.yml");
 
         if (achievementsAPI != null) {
             achievementsAPI.registerModuleAchievements(moduleInfo.getId(), "achievements.yml");
@@ -66,8 +70,8 @@ public class MinefieldModule implements GameModule<Player, Location, World, Mate
             voteMenu.registerGame(
                     moduleInfo.getId(),
                     Material.valueOf(moduleConfig.getString("menus.vote.item")),
-                    moduleConfig.getStringFrom("language.yml", "vote_menu.name"),
-                    moduleConfig.getStringListFrom("language.yml", "vote_menu.lore")
+                    moduleConfig.getTranslation(null, "vote_menu.name"),
+                    moduleConfig.getTranslationList(null, "vote_menu.lore")
             );
         }
 
@@ -120,4 +124,35 @@ public class MinefieldModule implements GameModule<Player, Location, World, Mate
     public Map<String, String> getCustomPlaceholders(Player player) {
         return gameManager.getCustomPlaceholders(player);
     }
+
+    @Override
+    public ModuleSetupMetadata getSetupMetadata() {
+        return new ModuleSetupMetadata() {
+
+            @Override
+            public List<ModuleSetupStep> getSetupSteps() {
+                return List.of(
+                        new ModuleSetupStep("finishline", true, "Configure Finishline", "Configure the module-specific finishline setup data.", List.of("/baa game <arena> minefield finishline"), "selection region"),
+                        new ModuleSetupStep("floor", true, "Configure Floor", "Configure the module-specific floor setup data.", List.of("/baa game <arena> minefield floor"), "selection region")
+                );
+            }
+
+            @Override
+            public List<ModuleSetupCommand> getSetupCommands() {
+                return List.of(
+                        new ModuleSetupCommand("finishline", "/baa game <arena> minefield finishline", "Configure finishline setup data.", true),
+                        new ModuleSetupCommand("floor", "/baa game <arena> minefield floor", "Configure floor setup data.", true)
+                );
+            }
+
+            @Override
+            public List<ModuleSetupStatusCheck<?, ?, ?>> getStatusChecks() {
+                return List.of(
+                        new ModuleSetupStatusCheck<>("finishline", true, "Select the finish line region.", context -> context.getData().has("game.finish_line.bounds.min.x") && context.getData().has("game.finish_line.bounds.max.x")),
+                        new ModuleSetupStatusCheck<>("floor", true, "Select the floor region.", context -> context.getData().has("game.floor.bounds.min.x") && context.getData().has("game.floor.bounds.max.x"))
+                );
+            }
+        };
+    }
+
 }

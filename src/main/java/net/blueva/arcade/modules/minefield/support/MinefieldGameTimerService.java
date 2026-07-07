@@ -76,7 +76,6 @@ public class MinefieldGameTimerService {
                            MinefieldArenaState state,
                            List<Player> allPlayers,
                            int timeLeft) {
-        String actionBarTemplate = coreConfig.getLanguage("action_bar.in_game.global");
         List<Player> topPlayers = scoreboardService.getTopPlayersByDistance(context);
 
         for (Player player : allPlayers) {
@@ -84,11 +83,12 @@ public class MinefieldGameTimerService {
                 continue;
             }
 
+            String actionBarTemplate = coreConfig.getLanguage(player, "action_bar.in_game.global");
             String actionBarMessage = formatActionBar(actionBarTemplate, context, timeLeft);
             context.getMessagesAPI().sendActionBar(player, actionBarMessage);
 
             Map<String, String> customPlaceholders = new HashMap<>(scoreboardService.getCustomPlaceholders(context, player));
-            customPlaceholders.put("time", String.valueOf(timeLeft));
+            customPlaceholders.put("time", formatCountdownTime(timeLeft));
             customPlaceholders.put("round", String.valueOf(context.getCurrentRound()));
             customPlaceholders.put("round_max", String.valueOf(context.getMaxRounds()));
 
@@ -111,8 +111,14 @@ public class MinefieldGameTimerService {
         }
 
         return template
-                .replace("{time}", String.valueOf(timeLeft))
+                .replace("{time}", formatCountdownTime(timeLeft))
                 .replace("{round}", String.valueOf(context.getCurrentRound()))
                 .replace("{round_max}", String.valueOf(context.getMaxRounds()));
     }
+
+    private static String formatCountdownTime(int seconds) {
+        int safeSeconds = Math.max(0, seconds);
+        return String.format("%02d:%02d", safeSeconds / 60, safeSeconds % 60);
+    }
+
 }

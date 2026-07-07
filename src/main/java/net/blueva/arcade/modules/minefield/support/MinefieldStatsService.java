@@ -27,13 +27,13 @@ public class MinefieldStatsService {
         }
 
         statsAPI.registerModuleStat(moduleInfo.getId(),
-                new StatDefinition("wins", moduleConfig.getStringFrom("language.yml", "stats.labels.wins", "Wins"), moduleConfig.getStringFrom("language.yml", "stats.descriptions.wins", "Minefield wins"), StatScope.MODULE));
+                new StatDefinition("wins", moduleConfig.getTranslation(null, "stats.labels.wins"), moduleConfig.getTranslation(null, "stats.descriptions.wins"), StatScope.MODULE));
         statsAPI.registerModuleStat(moduleInfo.getId(),
-                new StatDefinition("games_played", moduleConfig.getStringFrom("language.yml", "stats.labels.games_played", "Games Played"), moduleConfig.getStringFrom("language.yml", "stats.descriptions.games_played", "Minefield games played"), StatScope.MODULE));
+                new StatDefinition("games_played", moduleConfig.getTranslation(null, "stats.labels.games_played"), moduleConfig.getTranslation(null, "stats.descriptions.games_played"), StatScope.MODULE));
         statsAPI.registerModuleStat(moduleInfo.getId(),
-                new StatDefinition("finish_line_crosses", moduleConfig.getStringFrom("language.yml", "stats.labels.finish_line_crosses", "Finish line crosses"), moduleConfig.getStringFrom("language.yml", "stats.descriptions.finish_line_crosses", "Times you reached the safe zone"), StatScope.MODULE));
+                new StatDefinition("finish_line_crosses", moduleConfig.getTranslation(null, "stats.labels.finish_line_crosses"), moduleConfig.getTranslation(null, "stats.descriptions.finish_line_crosses"), StatScope.MODULE));
         statsAPI.registerModuleStat(moduleInfo.getId(),
-                new StatDefinition("mines_triggered", moduleConfig.getStringFrom("language.yml", "stats.labels.mines_triggered", "Mines triggered"), moduleConfig.getStringFrom("language.yml", "stats.descriptions.mines_triggered", "Mines you have stepped on"), StatScope.MODULE));
+                new StatDefinition("mines_triggered", moduleConfig.getTranslation(null, "stats.labels.mines_triggered"), moduleConfig.getTranslation(null, "stats.descriptions.mines_triggered"), StatScope.MODULE));
     }
 
     public boolean isEnabled() {

@@ -26,9 +26,8 @@ public class MinefieldMessageService {
     }
 
     public void sendDescription(GameContext<Player, Location, World, Material, ItemStack, Sound, Block, Entity> context) {
-        List<String> description = moduleConfig.getStringListFrom("language.yml", "description");
-
         for (Player player : context.getPlayers()) {
+            List<String> description = moduleConfig.getTranslationList(player, "description");
             for (String line : description) {
                 context.getMessagesAPI().sendRaw(player, line);
             }
@@ -72,7 +71,7 @@ public class MinefieldMessageService {
     }
 
     public String getRandomMessage(String path) {
-        List<String> messages = moduleConfig.getStringListFrom("language.yml", path);
+        List<String> messages = moduleConfig.getTranslationList(null, path);
         if (messages == null || messages.isEmpty()) {
             return null;
         }
@@ -82,10 +81,10 @@ public class MinefieldMessageService {
     }
 
     public String getMustBePlayerMessage() {
-        return coreConfig.getLanguage("admin_commands.errors.must_be_player");
+        return coreConfig.getLanguage(null, "admin_commands.errors.must_be_player");
     }
 
     public String getUnknownSubcommandMessage() {
-        return coreConfig.getLanguage("admin_commands.errors.unknown_subcommand");
+        return coreConfig.getLanguage(null, "admin_commands.errors.unknown_subcommand");
     }
 }
